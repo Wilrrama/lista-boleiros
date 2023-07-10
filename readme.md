@@ -1,5 +1,3 @@
-# Instruções de Desenvolvimento - Aplicação de Todo List
-
 ## Descrição da Aplicação
 
 Este repositório contém uma aplicação desenvolvida em React.
@@ -10,9 +8,11 @@ Este repositório contém uma aplicação desenvolvida em React.
 
 - A aplição permanece a lista via localStorage
 
-- Foi Aplicado Theme providader para mudar as cores do Header
+- Foi Aplicado Theme provider para mudar as cores do Header
 
 - Utilizada a biblioteca react icons para os icones
+
+- Utilizada a biblioteca react switch
 
 - Adicionada função para exibir a Data
 
