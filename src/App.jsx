@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Form } from "./components/Form";
 import { List } from "./components/List";
 import { Header } from "./components/Header";
@@ -9,7 +9,7 @@ import Switch from "react-switch";
 import { ThemeProvider } from "styled-components";
 import light from "../src/styles/themes/light";
 import dark from "../src/styles/themes/dark";
-import { GiSoccerBall } from "react-icons/gi";
+import { NameContext, NameProvider } from "./providers/NameContext";
 
 export const App = () => {
   const [theme, setTheme] = useState(light);
@@ -18,7 +18,7 @@ export const App = () => {
     setTheme(theme === light ? dark : light);
   };
 
-  const [nameList, setNameList] = useState([]);
+  const { setName, getName } = useContext(NameContext);
 
   const getCurrentDate = () => {
     const currentDate = new Date();
@@ -32,58 +32,37 @@ export const App = () => {
     return currentTime.toLocaleTimeString(undefined, options);
   };
 
-  useEffect(() => {
-    const storedList = localStorage.getItem("@nameList");
-    if (storedList) {
-      setNameList(JSON.parse(storedList));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("@nameList", JSON.stringify(nameList));
-  }, [nameList]);
-
-  const addName = (name) => {
-    setNameList([...nameList, name]);
-  };
-
-  const removeName = (NameId) => {
-    const newNameList = nameList.filter((name) => name.id !== NameId);
-    setNameList(newNameList);
-  };
-
   return (
     <ThemeProvider theme={theme}>
-      <StyledMain>
-        <GlobalStyled />
-        <Header>
-          <img src={Logo} alt="Logotipo da Equipe ou da Liga" />
-          <div>
-            <h4>Liga Hortolandense</h4>
-            <h4>Futebol Amador</h4>
-          </div>
-          <div>
-            <p>{getCurrentDate()}</p>
-            <p>{getCurrentTime()}</p>
-            <Switch
-              onChange={onChangeTheme}
-              checked={theme === light}
-              height={20}
-              checkedIcon={false}
-              handDiameter={20}
-              offColor={theme.colors.secondary}
-              onColor={theme.colors.secondary}
-            />
-            <p>by bigode</p>
-          </div>
-        </Header>
-        <h1>
-          Lista de B<GiSoccerBall />
-          leiros
-        </h1>
-        <Form addName={addName} setNameList={setNameList} />
-        <List nameList={nameList} removeName={removeName} />
-      </StyledMain>
+      <NameProvider>
+        <StyledMain>
+          <GlobalStyled />
+          <Header>
+            <img src={Logo} alt="Logotipo da Equipe ou da Liga" />
+            <div>
+              <h4>Liga Hortolandense</h4>
+              <h4>Futebol Amador</h4>
+            </div>
+            <div>
+              <p>{getCurrentDate()}</p>
+              <p>{getCurrentTime()}</p>
+              <Switch
+                onChange={onChangeTheme}
+                checked={theme === light}
+                height={20}
+                checkedIcon={false}
+                handDiameter={20}
+                offColor={theme.colors.secondary}
+                onColor={theme.colors.secondary}
+              />
+              <p>by bigode</p>
+            </div>
+          </Header>
+          <h1>Lista de Boleiros</h1>
+          <Form />
+          <List />
+        </StyledMain>
+      </NameProvider>
     </ThemeProvider>
   );
 };

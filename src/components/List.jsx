@@ -1,5 +1,9 @@
+import { useContext } from "react";
 import { ListItem } from "./ListItem";
-export const List = ({ nameList, removeName }) => {
+import { NameContext } from "../providers/NameContext";
+export const List = () => {
+  const { removeName, nameList } = useContext(NameContext);
+
   return (
     <>
       {nameList.length > 0 ? (

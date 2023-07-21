@@ -1,24 +1,20 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Input } from "./Input";
 import { v4 as uuidv4 } from "uuid";
 import { AiOutlineClear } from "react-icons/ai";
 import { GiSoccerBall } from "react-icons/gi";
+import { NameContext } from "../providers/NameContext";
 
-export const Form = ({ addName, setNameList }) => {
+export const Form = () => {
   const [value, setValue] = useState("");
+
+  const { addName, removeAll } = useContext(NameContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const newName = { id: uuidv4(), text: value };
     addName(newName);
     setValue("");
-  };
-
-  const removeAll = () => {
-    const confirmed = confirm("Deseja realmente limpar as Lista?");
-    if (confirmed) {
-      setNameList([]);
-    }
   };
 
   return (
